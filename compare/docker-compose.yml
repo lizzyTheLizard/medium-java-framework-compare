@@ -1,0 +1,31 @@
+---
+version: '3'
+services:
+  spring:
+    build:
+      context: ../spring/
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+  micronaut:
+    build:
+      context: ../micronaut/
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+  quarkus:
+    build:
+      context: ../quarkus/
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+
+
+
+  postgres_c:
+    image: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql

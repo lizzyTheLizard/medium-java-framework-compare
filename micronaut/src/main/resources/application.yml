@@ -1,0 +1,3 @@
+micronaut:
+  application:
+    name: medium-micronaut-r2dbc-example
