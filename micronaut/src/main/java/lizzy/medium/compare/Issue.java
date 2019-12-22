@@ -1,15 +1,19 @@
-package medium.micronaut.r2dbc.example;
+package lizzy.medium.compare;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.UUID;
 
+@Entity
 @Data
 @NoArgsConstructor(force = true)
 @RequiredArgsConstructor
 class Issue {
+    @Id
     private final UUID id;
     private final String name;
     private final String description;

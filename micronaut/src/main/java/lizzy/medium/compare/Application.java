@@ -1,4 +1,4 @@
-package medium.micronaut.r2dbc.example;
+package lizzy.medium.compare;
 
 import io.micronaut.runtime.Micronaut;
 

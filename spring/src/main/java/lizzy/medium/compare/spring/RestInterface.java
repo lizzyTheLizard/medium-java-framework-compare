@@ -1,4 +1,4 @@
-package medium.micronaut.r2dbc.example;
+package lizzy.medium.compare.spring;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -6,14 +6,15 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 import java.util.UUID;
 
-@RestController("/issue")
+@RestController
+@RequestMapping("/issue")
 @RequiredArgsConstructor
 public class RestInterface {
-    private final IssueRepository repository;
+    private final Repository repository;
 
     @GetMapping("/")
-    public Iterable<Issue> readAll() {
-        return repository.findAll();
+    public Issue[] readAll() {
+        return repository.findAll().toArray(Issue[]::new);
     }
 
     @GetMapping("/{id}/")
@@ -21,24 +22,24 @@ public class RestInterface {
         return repository.findById(id);
     }
 
-    @PostMapping
+    @PostMapping("/")
     public Issue create(@RequestBody Issue issue) {
         return repository.save(issue);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/")
     public Issue update(@PathVariable("id") UUID id, @RequestBody Issue issue) {
         return repository.save(issue);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/{id}/")
     public Issue partialUpdate(@PathVariable("id") UUID id, @RequestBody Issue issue) {
         final var old = repository.findById(id).orElseThrow();
         final var updated = old.partialUpdate(issue);
         return repository.save(updated);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}/")
     public void delete(@PathVariable("id") UUID id) {
         repository.deleteById(id);
     }
