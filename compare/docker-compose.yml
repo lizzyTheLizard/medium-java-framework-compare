@@ -15,6 +15,15 @@ services:
       - postgres
     ports:
       - "8080:8080"
+  quarkus:
+    build:
+      context: ../quarkus/
+      dockerfile: src/main/docker/Dockerfile.jvm
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+ 
   postgres:
     image: postgres
     volumes:
