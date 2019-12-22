@@ -1,11 +1,11 @@
 package lizzy.medium.compare;
 
-import com.sun.istack.NotNull;
 import io.micronaut.configuration.hibernate.jpa.scope.CurrentSession;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.validation.constraints.NotNull;
 
 import io.micronaut.spring.tx.annotation.Transactional;
 

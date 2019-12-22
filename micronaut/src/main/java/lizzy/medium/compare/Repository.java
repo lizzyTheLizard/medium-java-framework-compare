@@ -1,6 +1,6 @@
 package lizzy.medium.compare;
 
-import com.sun.istack.NotNull;
+import javax.validation.constraints.NotNull;
 
 import java.util.List;
 import java.util.Optional;

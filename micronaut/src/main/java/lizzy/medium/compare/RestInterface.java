@@ -18,7 +18,7 @@ public class RestInterface {
 
     @Get("/{id}/")
     public Issue read(@PathVariable("id") UUID id) {
-        return repository.findById(id).orElseThrow();
+        return repository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Post("/")
@@ -33,8 +33,8 @@ public class RestInterface {
 
     @Patch("/{id}/")
     public Issue partialUpdate(@PathVariable("id") UUID id, @Body Issue issue) {
-        final var old = repository.findById(id).orElseThrow();
-        final var updated = old.partialUpdate(issue);
+        final Issue old = repository.findById(id).orElseThrow(RuntimeException::new);
+        final Issue updated = old.partialUpdate(issue);
         return repository.update(updated);
     }
 
