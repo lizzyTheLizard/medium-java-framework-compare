@@ -52,7 +52,7 @@ dependencies {
 
 test.classpath += configurations.developmentOnly
 
-mainClassName = "lizzy.medium.compare.Application"
+mainClassName = "lizzy.medium.compare.micronaut.Application"
 // use JUnit 5 platform
 test {
     useJUnitPlatform()

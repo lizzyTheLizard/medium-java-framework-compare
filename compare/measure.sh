@@ -44,10 +44,10 @@ function startup(){
 	#Start the container and measure how long it takes untill we get a valid result
         startNS=$(date +"%s%N")
         docker-compose up -d $2
-        curl http://localhost:8080/issue/550e8400-e29b-11d4-a716-446655440000/
+        curl http://localhost:8080/issue/550e8400-e29b-11d4-a716-446655440000/ | grep "This is a test"
         while [ $? -ne 0 ]; do
             sleep 0.3
-            curl http://localhost:8080/issue/550e8400-e29b-11d4-a716-446655440000/
+            curl http://localhost:8080/issue/550e8400-e29b-11d4-a716-446655440000/ | grep "This is a test"
         done
         endNS=$(date +"%s%N")
         startuptime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
@@ -71,6 +71,8 @@ docker-compose up -d postgres
 sleep 3
 
 #measure individually
+compileTime "spring"    "spring"    "mvn"
+startup     "spring"    "spring"
 compileTime "micronaut" "micronaut" "gradle"
 startup     "micronaut" "micronaut"
 compileTime "micronaut" "micronaut-graal" "gradle"
@@ -78,8 +80,6 @@ startup     "micronaut" "micronaut-graal"
 
 #compileTime "quarkus"   "quarkus"   "mvn"
 #startup     "quarkus"   "quarkus"
-compileTime "spring"    "spring"    "mvn"
-startup     "spring"    "spring"
 
 #Output all results
 cat results;

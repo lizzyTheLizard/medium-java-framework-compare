@@ -1,4 +1,4 @@
-package lizzy.medium.compare;
+package lizzy.medium.compare.micronaut;
 
 import io.micronaut.http.annotation.*;
 import lombok.RequiredArgsConstructor;

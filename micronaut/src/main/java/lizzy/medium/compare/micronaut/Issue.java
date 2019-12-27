@@ -1,4 +1,4 @@
-package lizzy.medium.compare;
+package lizzy.medium.compare.micronaut;
 
 import io.micronaut.data.annotation.TypeDef;
 import io.micronaut.data.model.DataType;
@@ -22,11 +22,11 @@ class Issue {
     private String description;
 
     void partialUpdate(Issue partialIssue) {
-        if(partialIssue.getName() != null) {
+        if (partialIssue.getName() != null) {
             this.name = partialIssue.getName();
         }
 
-        if(partialIssue.getDescription() != null) {
+        if (partialIssue.getDescription() != null) {
             this.description = partialIssue.getDescription();
         }
     }
