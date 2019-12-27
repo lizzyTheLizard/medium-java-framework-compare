@@ -1,8 +1,10 @@
 package lizzy.medium.compare;
 
+import io.micronaut.data.annotation.TypeDef;
+import io.micronaut.data.model.DataType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -10,17 +12,22 @@ import java.util.UUID;
 
 @Entity
 @Data
-@NoArgsConstructor(force = true)
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 class Issue {
     @Id
-    private final UUID id;
-    private final String name;
-    private final String description;
+    @TypeDef(type = DataType.OBJECT)
+    private UUID id;
+    private String name;
+    private String description;
 
-    Issue partialUpdate(Issue partialIssue) {
-        return new Issue(this.id,
-                partialIssue.name != null ? partialIssue.name : this.name,
-                partialIssue.description != null ? partialIssue.description : this.description);
+    void partialUpdate(Issue partialIssue) {
+        if(partialIssue.getName() != null) {
+            this.name = partialIssue.getName();
+        }
+
+        if(partialIssue.getDescription() != null) {
+            this.description = partialIssue.getDescription();
+        }
     }
 }

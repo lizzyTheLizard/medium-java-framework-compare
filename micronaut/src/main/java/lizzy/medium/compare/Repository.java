@@ -1,19 +1,9 @@
 package lizzy.medium.compare;
 
-import javax.validation.constraints.NotNull;
-
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-public interface Repository {
-    Optional<Issue> findById(@NotNull UUID id);
+import io.micronaut.data.repository.CrudRepository;
 
-    Issue insert(@NotNull Issue issue);
-
-    void deleteById(@NotNull UUID id);
-
-    List<Issue> findAll();
-
-    Issue update(@NotNull Issue issue);
+@io.micronaut.data.annotation.Repository
+interface Repository extends CrudRepository<Issue, UUID> {
 }

@@ -10,10 +10,8 @@ datasources:
     driverClassName: org.postgresql.Driver
     username: postgres
     password: postgres
+    dialect: POSTGRES
 jpa:
   default:
-    properties:
-      hibernate:
-        hbm2ddl:
-          auto: update
-
+    entity-scan:
+      packages: 'lizzy.medium.compare'

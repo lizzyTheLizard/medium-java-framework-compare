@@ -19,23 +19,29 @@ configurations {
     developmentOnly 
 }
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.10'
     annotationProcessor 'org.projectlombok:lombok:1.18.10'
     annotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
+    annotationProcessor "io.micronaut:micronaut-graal"
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
+    annotationProcessor "io.micronaut.data:micronaut-data-processor:$micronautDataVersion"
+    compileOnly "com.oracle.substratevm:svm"
     implementation platform("io.micronaut:micronaut-bom:$micronautVersion")
     implementation "io.micronaut:micronaut-http-client"
-    implementation "io.micronaut.configuration:micronaut-jdbc-hikari"
     implementation "io.micronaut:micronaut-inject"
     implementation "io.micronaut:micronaut-validation"
     implementation "io.micronaut:micronaut-runtime"
-    implementation "io.micronaut.configuration:micronaut-hibernate-jpa"
+    implementation "io.micronaut.configuration:micronaut-jdbc-tomcat"
     implementation "io.micronaut:micronaut-http-server-netty"
-    implementation "javax.annotation:javax.annotation-api"
-    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    implementation "io.micronaut.data:micronaut-data-hibernate-jpa:$micronautDataVersion"
     runtimeOnly "org.postgresql:postgresql:42.2.9"
+    runtimeOnly 'io.micronaut.configuration:micronaut-jdbc-tomcat'
+    runtimeOnly "ch.qos.logback:logback-classic:1.2.3"
     testAnnotationProcessor platform("io.micronaut:micronaut-bom:$micronautVersion")
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testImplementation platform("io.micronaut:micronaut-bom:$micronautVersion")

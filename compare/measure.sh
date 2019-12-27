@@ -1,6 +1,6 @@
 #!/bin/bash
-COMPILE_TIMES=4
-STARTUP_TIMES=4
+COMPILE_TIMES=1
+STARTUP_TIMES=1
 CLEAN=true
 
 function compileTime(){
@@ -40,7 +40,6 @@ function startup(){
         #Rebuild the container to always have a startup from null
         docker-compose stop $2
         docker-compose rm -f $2
-        docker-compose build $2
 
 	#Start the container and measure how long it takes untill we get a valid result
         startNS=$(date +"%s%N")
@@ -72,12 +71,15 @@ docker-compose up -d postgres
 sleep 3
 
 #measure individually
-compileTime "quarkus"   "quarkus"   "mvn"
-startup     "quarkus"   "quarkus"
-compileTime "spring"    "spring"    "mvn"
-startup     "spring"    "spring"
 compileTime "micronaut" "micronaut" "gradle"
 startup     "micronaut" "micronaut"
+compileTime "micronaut" "micronaut-graal" "gradle"
+startup     "micronaut" "micronaut-graal"
+
+#compileTime "quarkus"   "quarkus"   "mvn"
+#startup     "quarkus"   "quarkus"
+compileTime "spring"    "spring"    "mvn"
+startup     "spring"    "spring"
 
 #Output all results
 cat results;

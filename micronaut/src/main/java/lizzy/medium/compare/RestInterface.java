@@ -3,7 +3,9 @@ package lizzy.medium.compare;
 import io.micronaut.http.annotation.*;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller("/issue")
@@ -11,31 +13,33 @@ import java.util.UUID;
 public class RestInterface {
     private final Repository repository;
 
-    @Get("/")
+    @Get
     public List<Issue> readAll() {
-        return repository.findAll();
+        List<Issue> list = new ArrayList<>();
+        repository.findAll().forEach(list::add);
+        return list;
     }
 
     @Get("/{id}/")
-    public Issue read(@PathVariable("id") UUID id) {
-        return repository.findById(id).orElseThrow(RuntimeException::new);
+    public Optional<Issue> read(@PathVariable("id") UUID id) {
+        return repository.findById(id);
     }
 
-    @Post("/")
-    public Issue create(@Body Issue issue) {
-        return repository.insert(issue);
+    @Post
+    public Issue create(@Body Issue body) {
+        return repository.save(body);
     }
 
     @Put("/{id}/")
-    public Issue update(@PathVariable("id") UUID id, @Body Issue issue) {
-        return repository.update(issue);
+    public Issue update(@PathVariable("id") UUID id, @Body Issue body) {
+        return repository.update(body);
     }
 
     @Patch("/{id}/")
-    public Issue partialUpdate(@PathVariable("id") UUID id, @Body Issue issue) {
-        final Issue old = repository.findById(id).orElseThrow(RuntimeException::new);
-        final Issue updated = old.partialUpdate(issue);
-        return repository.update(updated);
+    public Issue partialUpdate(@PathVariable("id") UUID id, @Body Issue body) {
+        final Issue issue = repository.findById(id).orElseThrow(RuntimeException::new);
+        issue.partialUpdate(body);
+        return repository.update(issue);
     }
 
     @Delete("/{id}/")
