@@ -22,7 +22,7 @@ function compileTime(){
         startNS=$(date +"%s%N")
         if [ "$3" == "mvn" ]
         then
-            ./mvnw package
+            ./mvnw package $4
         else
             ./gradlew assemble
         fi
@@ -71,15 +71,16 @@ docker-compose up -d postgres
 sleep 3
 
 #measure individually
-compileTime "spring"    "spring"    "mvn"
+compileTime "quarkus"   "quarkus-graal" "mvn" "-Pnative -Dquarkus.native.container-build=true"
+startup     "quarkus"   "quarkus-graal"
+compileTime "quarkus"   "quarkus" "mvn"
+startup     "quarkus"   "quarkus"
+compileTime "spring"    "spring" "mvn"
 startup     "spring"    "spring"
 compileTime "micronaut" "micronaut" "gradle"
 startup     "micronaut" "micronaut"
 compileTime "micronaut" "micronaut-graal" "gradle"
 startup     "micronaut" "micronaut-graal"
-
-#compileTime "quarkus"   "quarkus"   "mvn"
-#startup     "quarkus"   "quarkus"
 
 #Output all results
 cat results;

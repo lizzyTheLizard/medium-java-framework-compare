@@ -2,7 +2,6 @@ package lizzy.medium.compare.quarkus;
 
 import lombok.RequiredArgsConstructor;
 
-import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
@@ -33,7 +32,6 @@ public class RestInterface {
     @POST
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Transactional
     public Issue create(Issue body) {
         return repository.insert(body);
     }
@@ -42,7 +40,6 @@ public class RestInterface {
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Transactional
     public Issue update(@PathParam("id") UUID id, Issue body) {
         return repository.update(body);
     }
@@ -51,7 +48,6 @@ public class RestInterface {
     @Path("/{id}/")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    @Transactional
     public Issue partialUpdate(@PathParam("id") UUID id, Issue body) {
         final Issue issue = repository.findById(id).orElseThrow(RuntimeException::new);
         issue.partialUpdate(body);
@@ -60,7 +56,6 @@ public class RestInterface {
 
     @DELETE
     @Path("/{id}/")
-    @Transactional
     public void delete(@PathParam("id") UUID id) {
         repository.deleteById(id);
     }

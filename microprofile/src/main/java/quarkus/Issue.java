@@ -1,4 +1,4 @@
-package lizzy.medium.compare.quarkus;
+package quarkus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
