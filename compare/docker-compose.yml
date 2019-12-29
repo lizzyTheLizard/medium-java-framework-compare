@@ -8,22 +8,39 @@ services:
       - postgres
     ports:
       - "8080:8080"
-  micronaut:
+  micronaut-jpa:
     build:
-      context: ../micronaut/
+      context: ../micronaut-jpa/
       dockerfile: Dockerfile.jvm
     depends_on:
       - postgres
     ports:
       - "8080:8080"
-  micronaut-graal:
+  micronaut-jpa-graal:
     build:
-      context: ../micronaut/
+      context: ../micronaut-jpa/
       dockerfile: Dockerfile.native
     depends_on:
       - postgres
     ports:
       - "8080:8080"
+  micronaut-jdbc:
+    build:
+      context: ../micronaut-jdbc/
+      dockerfile: Dockerfile.jvm
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+  micronaut-jdbc-graal:
+    build:
+      context: ../micronaut-jdbc/
+      dockerfile: Dockerfile.native
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+ 
   quarkus:
     build:
       context: ../quarkus/
