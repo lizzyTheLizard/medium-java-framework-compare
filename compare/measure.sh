@@ -4,19 +4,19 @@ STARTUP_TIMES=1
 
 function check(){
     compileTime "$1" "$2" "$3" "$4"
-    startup     "$1" "$2" "$3" "$4"
+    startup     "$2"
 }
 
 function compileTime(){
     for (( i=0; i<COMPILE_TIMES; i++))
     do
         #make a clean first as we want to measure a full rebuild
-        clean $1 $3
+        clean "$1" "$3"
 
 	#Build the application and store the time needed to results
         startNS=$(date +"%s%N")
-	compile $1 $3 $4
-	buildImage $2
+	compile "$1" "$3" "$4"
+	buildImage "$2"
         endNS=$(date +"%s%N")
         compiletime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
 	echo "$2, Compile time, $compiletime" >> results.csv
@@ -68,25 +68,25 @@ function startup(){
     for (( i=0; i<STARTUP_TIMES; i++))
     do
         #Recreate the container to always have a startup from null
-        disposeContainer $2
+        disposeContainer "$1"
 
         #Start the container and measure how long it takes untill we get a valid result
         startNS=$(date +"%s%N")
-        startContainer $2
+        startContainer "$1"
         endNS=$(date +"%s%N")
         startuptime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
-	echo "$2, Startup time, $startuptime" >> results.csv
+	echo "$1, Startup time, $startuptime" >> results.csv
 
         #Measure memory
-        memory=$(docker stats --format "{{.MemUsage}}" --no-stream "compare_$2_1")
-	echo "$2, Memory Usage (Startup), $memory" >> results.csv
+        memory=$(docker stats --format "{{.MemUsage}}" --no-stream "compare_$1_1")
+	echo "$1, Memory Usage (Startup), $memory" >> results.csv
 
         #Make sure container runs normally
-        checkContainer $2
+        checkContainer "$1"
     done
 
     #Stop container again
-    disposeContainer $2
+    disposeContainer "$1"
 }
 
 function disposeContainer() {
@@ -164,11 +164,12 @@ function prepare () {
 }
 
 prepare
-check "quarkus"        "quarkus"              "mvn"
-check "spring"         "spring"               "mvn"
-check "micronaut-jdbc" "micronaut-jdbc"       "gradle"
-check "micronaut-jpa"  "micronaut-jpa"        "gradle"
 check "quarkus"        "quarkus-graal"        "mvn"     "-Pnative -Dquarkus.native.container-build=true"
 check "micronaut-jdbc" "micronaut-jdbc-graal" "gradle"
 check "micronaut-jpa"  "micronaut-jpa-graal"  "gradle"
+
+check "spring"         "spring"               "mvn"
+check "quarkus"        "quarkus"              "mvn"
+check "micronaut-jdbc" "micronaut-jdbc"       "gradle"
+check "micronaut-jpa"  "micronaut-jpa"        "gradle"
 cat results.csv;
