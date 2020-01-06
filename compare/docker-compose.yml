@@ -40,7 +40,14 @@ services:
       - postgres
     ports:
       - "8080:8080"
- 
+  helidon-mp:
+    build:
+      context: ../helidon-mp/
+      dockerfile: Dockerfile.jvm
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
   quarkus:
     build:
       context: ../quarkus/

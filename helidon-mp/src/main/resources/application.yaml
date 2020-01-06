@@ -1,0 +1,9 @@
+javax:
+  sql:
+    DataSource:
+      dataSource:
+        dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+        dataSource:
+          url: jdbc:postgresql://postgres:5432/postgres
+          user: postgres
+          password: postgres

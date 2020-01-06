@@ -164,12 +164,13 @@ function prepare () {
 }
 
 prepare
-check "quarkus"        "quarkus-graal"        "mvn"     "-Pnative -Dquarkus.native.container-build=true"
-check "micronaut-jdbc" "micronaut-jdbc-graal" "gradle"
-check "micronaut-jpa"  "micronaut-jpa-graal"  "gradle"
-
+check "helidon-mp"     "helidon-mp"           "mvn"
 check "spring"         "spring"               "mvn"
 check "quarkus"        "quarkus"              "mvn"
 check "micronaut-jdbc" "micronaut-jdbc"       "gradle"
 check "micronaut-jpa"  "micronaut-jpa"        "gradle"
+check "quarkus"        "quarkus-graal"        "mvn"     "-Pnative -Dquarkus.native.container-build=true"
+check "micronaut-jdbc" "micronaut-jdbc-graal" "gradle"
+check "micronaut-jpa"  "micronaut-jpa-graal"  "gradle"
+
 cat results.csv;
