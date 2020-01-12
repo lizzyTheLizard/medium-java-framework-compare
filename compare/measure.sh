@@ -65,7 +65,7 @@ function buildImage(){
 }
 
 function startup(){
-    for (( i=0; i<STARTUP_TIMES; i++))
+    for (( start=0; start<STARTUP_TIMES; start++))
     do
         #Recreate the container to always have a startup from null
         disposeContainer "$1"
@@ -166,6 +166,7 @@ function prepare () {
 prepare
 check "helidon-mp"     "helidon-mp"           "mvn"
 check "spring"         "spring"               "mvn"
+check "spring-jdbc"    "spring-jdbc"          "mvn"
 check "quarkus"        "quarkus"              "mvn"
 check "micronaut-jdbc" "micronaut-jdbc"       "gradle"
 check "micronaut-jpa"  "micronaut-jpa"        "gradle"

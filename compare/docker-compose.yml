@@ -8,6 +8,13 @@ services:
       - postgres
     ports:
       - "8080:8080"
+  spring-jdbc:
+    build:
+      context: ../spring-jdbc/
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
   micronaut-jpa:
     build:
       context: ../micronaut-jpa/
