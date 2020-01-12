@@ -1,1 +1,5 @@
 */times
+*/.idea
+*/target
+*/*.iml
+*/dependency-reduced-pom.xml

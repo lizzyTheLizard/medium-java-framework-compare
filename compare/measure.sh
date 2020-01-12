@@ -3,7 +3,7 @@ COMPILE_TIMES=1
 STARTUP_TIMES=1
 
 function check(){
-    compileTime "$1" "$2" "$3" "$4"
+    compileTime "$1" "$2" "$3"
     startup     "$2"
 }
 
@@ -11,11 +11,11 @@ function compileTime(){
     for (( i=0; i<COMPILE_TIMES; i++))
     do
         #make a clean first as we want to measure a full rebuild
-        clean "$1" "$3"
+        clean "$1"
 
 	#Build the application and store the time needed to results
         startNS=$(date +"%s%N")
-	compile "$1" "$3" "$4"
+	compile "$1" "$3"
 	buildImage "$2"
         endNS=$(date +"%s%N")
         compiletime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
@@ -25,12 +25,7 @@ function compileTime(){
 
 function clean() {
     pushd ../$1
-    if [ "$2" == "mvn" ]
-    then
-        ./mvnw clean
-    else
-        ./gradlew clean
-    fi
+    ../mvnw clean
     if [ $? -ne 0 ]
     then
         popd
@@ -41,13 +36,7 @@ function clean() {
 
 function compile(){
     pushd ../$1
-    if [ "$2" == "mvn" ]
-    then
-        ./mvnw package $3
-    else
-        ./gradlew assemble
-    fi
-
+    ../mvnw package $2
     if [ $? -ne 0 ]
     then
         popd
@@ -164,14 +153,14 @@ function prepare () {
 }
 
 prepare
-check "helidon-mp"     "helidon-mp"           "mvn"
-check "spring"         "spring"               "mvn"
-check "spring-jdbc"    "spring-jdbc"          "mvn"
-check "quarkus"        "quarkus"              "mvn"
-check "micronaut-jdbc" "micronaut-jdbc"       "gradle"
-check "micronaut-jpa"  "micronaut-jpa"        "gradle"
-check "quarkus"        "quarkus-graal"        "mvn"     "-Pnative -Dquarkus.native.container-build=true"
-check "micronaut-jdbc" "micronaut-jdbc-graal" "gradle"
-check "micronaut-jpa"  "micronaut-jpa-graal"  "gradle"
+check "helidon-mp"     "helidon-mp"
+check "spring"         "spring"
+check "spring-jdbc"    "spring-jdbc"
+check "quarkus"        "quarkus"
+check "micronaut-jdbc" "micronaut-jdbc"
+check "micronaut-jpa"  "micronaut-jpa"
+check "quarkus"        "quarkus-graal"        "-Pnative -Dquarkus.native.container-build=true"
+check "micronaut-jdbc" "micronaut-jdbc-graal"
+check "micronaut-jpa"  "micronaut-jpa-graal"
 
 cat results.csv;

@@ -1,5 +1,0 @@
-profile: service
-defaultPackage: lizzy.medium.compare
----
-testFramework: junit
-sourceLanguage: java
