@@ -160,20 +160,20 @@ function load() {
     do
 	prepareForLoad "$1"
         startNS=$(date +"%s%N")
-        jmeter -n -t loadtest.jmx -j out.log
+        jmeter -n -t loadtest.jmx -j jmeter.out -l jmeter.log
         endNS=$(date +"%s%N")
         memory=$(docker stats --format "{{.MemUsage}}" --no-stream "compare_$1_1" | awk 'match($0,/[0-9\.]+/) {print substr($0, RSTART, RLENGTH)}')
         loadtime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
 
-        tail -1 out.log | grep "Err: *0 ("
+        tail -1 jmeter.out | grep "Err: *0 ("
         if [ $? -ne 0 ]
         then
-            popd
-            fail "Load tests failed $1"
+            echo "$1, Memory Usage (Load), FAIL" >> results.csv
+            echo "$1, Load Time, FAIL" >> results.csv
+	else
+            echo "$1, Memory Usage (Load), $memory" >> results.csv
+            echo "$1, Load Time, $loadtime" >> results.csv
         fi
-
-        echo "$1, Memory Usage (Load), $memory" >> results.csv
-        echo "$1, Load Time, $loadtime" >> results.csv
     done
 }
 
