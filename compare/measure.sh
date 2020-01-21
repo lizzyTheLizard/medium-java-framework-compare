@@ -1,10 +1,21 @@
 #!/bin/bash
 COMPILE_TIMES=1
 STARTUP_TIMES=1
+LOAD_TIMES=1
 
 function check(){
+    prepareDocker
     compileTime "$1" "$2" "$3"
     startup     "$2"
+    load        "$2"
+    cleanDocker "$2"
+}
+
+function prepareDocker () {
+    # Delete everything and set up postgres new
+    docker-compose stop
+    docker-compose rm -f
+    docker-compose up --build -d postgres
 }
 
 function compileTime(){
@@ -15,11 +26,11 @@ function compileTime(){
 
 	#Build the application and store the time needed to results
         startNS=$(date +"%s%N")
-	compile "$1" "$3"
-	buildImage "$2"
+        compile "$1" "$3"
+        buildImage "$2"
         endNS=$(date +"%s%N")
         compiletime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
-	echo "$2, Compile time, $compiletime" >> results.csv
+        echo "$2, Compile time, $compiletime" >> results.csv
     done
 }
 
@@ -67,8 +78,8 @@ function startup(){
 	echo "$1, Startup time, $startuptime" >> results.csv
 
         #Measure memory
-        memory=$(docker stats --format "{{.MemUsage}}" --no-stream "compare_$1_1")
-	echo "$1, Memory Usage (Startup), $memory" >> results.csv
+        memory=$(docker stats --format "{{.MemUsage}}" --no-stream "compare_$1_1" | awk 'match($0,/[0-9\.]+/) {print substr($0, RSTART, RLENGTH)}')
+        echo "$1, Memory Usage (Startup), $memory" >> results.csv
 
         #Make sure container runs normally
         checkContainer "$1"
@@ -144,15 +155,46 @@ function fail() {
     exit -1
 }
 
-function prepare () {
-    rm -f results.csv
-    docker-compose stop
-    docker-compose rm -f postgres
-    docker-compose build postgres
-    docker-compose up -d postgres
+function load() {
+    for (( load=0; load<LOAD_TIMES; load++))
+    do
+	prepareForLoad "$1"
+        startNS=$(date +"%s%N")
+        jmeter -n -t loadtest.jmx -j out.log
+        endNS=$(date +"%s%N")
+        memory=$(docker stats --format "{{.MemUsage}}" --no-stream "compare_$1_1" | awk 'match($0,/[0-9\.]+/) {print substr($0, RSTART, RLENGTH)}')
+        loadtime=$(echo "scale=2;($endNS-$startNS)/1000000000" | bc)
+
+        tail -1 out.log | grep "Err: *0 ("
+        if [ $? -ne 0 ]
+        then
+            popd
+            fail "Load tests failed $1"
+        fi
+
+        echo "$1, Memory Usage (Load), $memory" >> results.csv
+        echo "$1, Load Time, $loadtime" >> results.csv
+    done
 }
 
-prepare
+function prepareForLoad() {
+    # We have to freshly set up the container (incl db) to avoid follow up effects
+    docker-compose stop
+    docker-compose rm -f
+    docker-compose up --build -d postgres
+    startContainer "$1"
+}
+
+function cleanDocker() {
+    docker rm -f compare_$1_1
+    docker rmi -f compare_$1
+    docker image prune -f
+    docker volume prune -f
+}
+
+# Remove the old result file
+rm -f results.csv
+
 check "helidon-mp"     "helidon-mp"
 check "spring"         "spring"
 check "spring-jdbc"    "spring-jdbc"
