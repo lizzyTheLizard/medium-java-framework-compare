@@ -1,7 +1,7 @@
 #!/bin/bash
-COMPILE_TIMES=1
-STARTUP_TIMES=1
-LOAD_TIMES=1
+COMPILE_TIMES=30
+STARTUP_TIMES=30
+LOAD_TIMES=30
 
 function check(){
     prepareDocker
@@ -186,6 +186,7 @@ function prepareForLoad() {
 }
 
 function cleanDocker() {
+    docker stop compare_$1_1
     docker rm -f compare_$1_1
     docker rmi -f compare_$1
     docker image prune -f
