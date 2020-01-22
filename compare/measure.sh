@@ -182,6 +182,7 @@ function prepareForLoad() {
     docker-compose stop
     docker-compose rm -f
     docker-compose up --build -d postgres
+    sleep 10;
     startContainer "$1"
 }
 

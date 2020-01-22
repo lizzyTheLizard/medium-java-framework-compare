@@ -1288,3 +1288,63 @@ micronaut-jpa-graal, Startup time, 1.45
 micronaut-jpa-graal, Memory Usage (Startup), 27.77
 micronaut-jpa-graal, Startup time, 1.44
 micronaut-jpa-graal, Memory Usage (Startup), 27.71
+micronaut-jpa-graal, Memory Usage (Load), 504.2
+micronaut-jpa-graal, Load Time, 19.35
+micronaut-jpa-graal, Memory Usage (Load), 428.5
+micronaut-jpa-graal, Load Time, 12.81
+micronaut-jpa-graal, Memory Usage (Load), 423
+micronaut-jpa-graal, Load Time, 13.30
+micronaut-jpa-graal, Memory Usage (Load), 446.8
+micronaut-jpa-graal, Load Time, 13.41
+micronaut-jpa-graal, Memory Usage (Load), 430.2
+micronaut-jpa-graal, Load Time, 14.41
+micronaut-jpa-graal, Memory Usage (Load), 438.6
+micronaut-jpa-graal, Load Time, 14.60
+micronaut-jpa-graal, Memory Usage (Load), 426.2
+micronaut-jpa-graal, Load Time, 14.77
+micronaut-jpa-graal, Memory Usage (Load), 417.1
+micronaut-jpa-graal, Load Time, 13.43
+micronaut-jpa-graal, Memory Usage (Load), 468.6
+micronaut-jpa-graal, Load Time, 14.11
+micronaut-jpa-graal, Memory Usage (Load), 432.9
+micronaut-jpa-graal, Load Time, 14.25
+micronaut-jpa-graal, Memory Usage (Load), 416.3
+micronaut-jpa-graal, Load Time, 13.31
+micronaut-jpa-graal, Memory Usage (Load), 426
+micronaut-jpa-graal, Load Time, 14.36
+micronaut-jpa-graal, Memory Usage (Load), 448.2
+micronaut-jpa-graal, Load Time, 14.26
+micronaut-jpa-graal, Memory Usage (Load), 417.1
+micronaut-jpa-graal, Load Time, 13.39
+micronaut-jpa-graal, Memory Usage (Load), 445.2
+micronaut-jpa-graal, Load Time, 14.33
+micronaut-jpa-graal, Memory Usage (Load), 447.7
+micronaut-jpa-graal, Load Time, 14.61
+micronaut-jpa-graal, Memory Usage (Load), 452.1
+micronaut-jpa-graal, Load Time, 15.24
+micronaut-jpa-graal, Memory Usage (Load), 410.4
+micronaut-jpa-graal, Load Time, 14.14
+micronaut-jpa-graal, Memory Usage (Load), 447.3
+micronaut-jpa-graal, Load Time, 13.77
+micronaut-jpa-graal, Memory Usage (Load), 453.6
+micronaut-jpa-graal, Load Time, 13.94
+micronaut-jpa-graal, Memory Usage (Load), 486.3
+micronaut-jpa-graal, Load Time, 13.85
+micronaut-jpa-graal, Memory Usage (Load), 491.8
+micronaut-jpa-graal, Load Time, 15.11
+micronaut-jpa-graal, Memory Usage (Load), 419.9
+micronaut-jpa-graal, Load Time, 13.13
+micronaut-jpa-graal, Memory Usage (Load), 433.5
+micronaut-jpa-graal, Load Time, 14.85
+micronaut-jpa-graal, Memory Usage (Load), 422.6
+micronaut-jpa-graal, Load Time, 13.57
+micronaut-jpa-graal, Memory Usage (Load), 456.2
+micronaut-jpa-graal, Load Time, 14.70
+micronaut-jpa-graal, Memory Usage (Load), 433.2
+micronaut-jpa-graal, Load Time, 13.94
+micronaut-jpa-graal, Memory Usage (Load), 430
+micronaut-jpa-graal, Load Time, 14.02
+micronaut-jpa-graal, Memory Usage (Load), 470.3
+micronaut-jpa-graal, Load Time, 14.39
+micronaut-jpa-graal, Memory Usage (Load), 452.7
+micronaut-jpa-graal, Load Time, 13.68
