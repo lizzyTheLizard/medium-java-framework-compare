@@ -1,0 +1,20 @@
+---
+micronaut:
+  application:
+    name: micronaut
+  executors:
+    io:
+      type: fixed
+      nThreads: 75
+---
+datasources:
+  default:
+    url: "jdbc:postgresql://postgres:5432/postgres"
+    driverClassName: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    dialect: POSTGRES
+jpa:
+  default:
+    entity-scan:
+      packages: 'lizzy.medium.compare'

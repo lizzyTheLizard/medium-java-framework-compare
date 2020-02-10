@@ -206,5 +206,8 @@ check "micronaut-jpa"  "micronaut-jpa"
 check "quarkus"        "quarkus-graal"        "-Pnative -Dquarkus.native.container-build=true"
 check "micronaut-jdbc" "micronaut-jdbc-graal"
 check "micronaut-jpa"  "micronaut-jpa-graal"
-
+check "micronaut-jdbc-fixed-thread-pool" "micronaut-jdbc-fixed-thread-pool"
+check "micronaut-jdbc-fixed-thread-pool" "micronaut-jdbc-fixed-thread-pool-graal"
+check "micronaut-jpa-fixed-thread-pool" "micronaut-jpa-fixed-thread-pool"
+check "micronaut-jpa-fixed-thread-pool" "micronaut-jpa-fixed-thread-pool-graal"
 cat results.csv;

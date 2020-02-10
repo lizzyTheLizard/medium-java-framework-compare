@@ -47,6 +47,38 @@ services:
       - postgres
     ports:
       - "8080:8080"
+  micronaut-jpa-fixed-thread-pool:
+    build:
+      context: ../micronaut-jpa-fixed-thread-pool/
+      dockerfile: Dockerfile.jvm
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+  micronaut-jpa-fixed-thread-pool-graal:
+    build:
+      context: ../micronaut-jpa-fixed-thread-pool/
+      dockerfile: Dockerfile.native
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+  micronaut-jdbc-fixed-thread-pool:
+    build:
+      context: ../micronaut-jdbc-fixed-thread-pool/
+      dockerfile: Dockerfile.jvm
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+  micronaut-jdbc-fixed-thread-pool-graal:
+    build:
+      context: ../micronaut-jdbc-fixed-thread-pool/
+      dockerfile: Dockerfile.native
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
   helidon-mp:
     build:
       context: ../helidon-mp/
